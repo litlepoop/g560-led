@@ -33,7 +33,7 @@ sudo ./g560-led.py solid 00FF00
 Usage:
     g560-led [help|--help|-h] - This help
     g560-led solid {color} - Solid color mode
-	g560-led individual {color} {color} {color} {color} - Solid color for each single LED (L1,R1,L2,R2)
+    g560-led individual {color} {color} {color} {color} - Solid color for each single LED (L1,R1,L2,R2)
     g560-led cycle [{rate} [{brightness}]] - Cycle through all colors
     g560-led breathe {color} [{rate} [{brightness}]] - Single color breathing
     g560-led gui - GUI Pop-Up for selecting color
