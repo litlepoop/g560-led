@@ -33,6 +33,7 @@ sudo ./g560-led.py solid 00FF00
 Usage:
     g560-led [help|--help|-h] - This help
     g560-led solid {color} - Solid color mode
+	g560-led individual {color} {color} {color} {color} - Solid color for each single LED (L1,R1,L2,R2)
     g560-led cycle [{rate} [{brightness}]] - Cycle through all colors
     g560-led breathe {color} [{rate} [{brightness}]] - Single color breathing
     g560-led gui - GUI Pop-Up for selecting color
@@ -44,8 +45,10 @@ Arguments:
     brightness: 0-100 (Percentage. Default: 100%)
 ```
 
-Note that the G560 has four independent lights: currently this script will set all to the same color.
-The GUI color picker is able to set each light individually.
+Note that the G560 has four independent lights.
+The "gui" color picker is able to set each light individually.
+Also the "individual" mode can set each LED on its own.
+The other modes will set all four lights together.
 
 Fork of [g560-led](https://github.com/claudiosanches/g560-led).
 Inspired by and based on [g810-led](https://github.com/MatMoul/g810-led),
