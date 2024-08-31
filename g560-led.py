@@ -24,6 +24,7 @@ def help():
 Usage:
 \tg560-led [help|--help|-h] - This help
 \tg560-led solid {color} - Solid color mode
+\tg560-led individual {color} {color} {color} {color} - Solid color for each single LED (L1,R1,L2,R2)
 \tg560-led cycle [{rate} [{brightness}]] - Cycle through all colors
 \tg560-led breathe {color} [{rate} [{brightness}]] - Single color breathing
 \tg560-led gui - GUI Pop-Up for selecting color
@@ -47,6 +48,13 @@ def main():
         sys.exit()
     elif mode == 'solid':
         set_led_solid(process_color(args[2]))
+    elif mode == 'individual':
+        set_led_individual(
+            process_color(args[2]),
+            process_color(args[3]),
+            process_color(args[4]),
+            process_color(args[5])
+        )
     elif mode == 'cycle':
         set_led_cycle(process_rate(args[2]), process_brightness(args[3]))
     elif mode == 'breathe':
@@ -98,6 +106,13 @@ def process_brightness(brightness):
 
 def set_led_solid(color):
     return set_led('01', color + '0000000000')
+
+
+def set_led_individual(color0, color1, color2, color3):
+    set_led_single('01', color0 + '0000000000', '00')
+    set_led_single('01', color1 + '0000000000', '01')
+    set_led_single('01', color2 + '0000000000', '02')
+    return set_led_single('01', color3 + '0000000000', '03')
 
 
 def set_led_breathe(color, rate, brightness):
@@ -237,17 +252,16 @@ def set_led(mode, data):
     send_command(prefix + right_secondary + mode + data + suffix)
     send_command(prefix + left_primary + mode + data + suffix)
     send_command(prefix + right_primary + mode + data + suffix)
-    
-    
+
+
 def set_led_single(mode, data, pos):
     global device
     global wIndex
-
     prefix = '11ff043a'
     suffix = '000000000000'
     send_command(prefix + pos + mode + data + suffix)
 
-    
+
 def send_command(data):
     attach_device()
     device.ctrl_transfer(0x21, 0x09, 0x0211, wIndex, binascii.unhexlify(data))
